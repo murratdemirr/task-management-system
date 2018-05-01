@@ -1,0 +1,13 @@
+version: '3.0'
+services:
+    tms-backend:
+        container_name: tms-backend
+        build:
+            context: .
+            dockerfile: tms-backend/Dockerfile
+        expose:
+            - 8080
+        ports:
+            - 8080:8080
+        logging:
+            driver: json-file
