@@ -2,12 +2,10 @@ version: '3.0'
 services:
     tms-backend:
         container_name: tms-backend
+        image: lala
         build:
-            context: .
-            dockerfile: tms-backend/Dockerfile
-        expose:
-            - 8080
+            context: ./tms-backend
+            dockerfile: Dockerfile
         ports:
             - 8080:8080
-        logging:
-            driver: json-file
+        command: start
