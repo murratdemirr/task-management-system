@@ -41,7 +41,7 @@ public class Task implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "PRIORTY", columnDefinition = "default 999")
+    @Column(name = "PRIORTY")
     private Integer priority;
 
     @Enumerated(EnumType.STRING)

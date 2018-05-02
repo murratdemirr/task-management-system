@@ -8,4 +8,22 @@ services:
             dockerfile: Dockerfile
         ports:
             - 8080:8080
+        depends_on:
+            - mypostgres
+        links:
+            - mypostgres
         command: start
+    mypostgres:
+        image: postgres
+        ports:
+            - 5432:5432
+        volumes:
+            - mypostgres:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_USER=postgres
+            - POSTGRES_DB=mydb
+            - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+    mypostgres: {}

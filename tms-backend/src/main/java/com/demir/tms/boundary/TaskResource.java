@@ -30,7 +30,7 @@ public class TaskResource {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get a paginated list of all tasks.", notes = "The list is paginated. You can provide a page number (default 0) and a page size (default 10)")
     public @ResponseBody
-    Page<Task> getAllHotel(
+    Page<Task> getAllTask(
             @ApiParam(value = "The page number (zero-based)", required = true)
             @RequestParam(value = "page", required = true, defaultValue = "0") Integer page,
             @ApiParam(value = "Tha page size", required = true)
