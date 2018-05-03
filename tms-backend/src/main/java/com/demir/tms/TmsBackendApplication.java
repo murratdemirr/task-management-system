@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableAutoConfiguration  // Sprint Boot Auto Configuration
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableJpaRepositories("com.demir.tms.control")
 @ComponentScan(basePackages = "com.demir.tms")
 public class TmsBackendApplication {

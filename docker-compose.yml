@@ -1,41 +1,41 @@
 version: '3.0'
 services:
     tms-backend:
-        container_name: tms-backend
-        image: backend
+        container_name: backend-app
+        image: backend-image
         build:
             context: ./tms-backend
             dockerfile: Dockerfile
         ports:
-            - 8082:80
+            - 8082:8080
         depends_on:
-            - mypostgres
+            - tms-datacenter
         links:
-            - mypostgres
-        command: start
+            - tms-datacenter
     tms-view:
-        container_name: tms-view
-        image: view
+        container_name: view-app
+        image: view-image
         build:
-          context: ./tms-veiew
-          dockerfile: DockerFile
+            context: ./tms-veiew
+            dockerfile: DockerFile
         ports:
-          - 8080:80
+            - 8080:80
         depends_on:
-          - tms-backend
+            - tms-backend
         links:
-          - tms-backend
-    mypostgres:
+            - tms-backend
+    tms-datacenter:
+        container_name: tms-datacenter
         image: postgres
         ports:
             - 5432:5432
         volumes:
-            - mypostgres:/var/lib/postgresql/data
+            - tms-datacenter:/var/lib/postgresql/data
         environment:
             - POSTGRES_PASSWORD=password
             - POSTGRES_USER=postgres
-            - POSTGRES_DB=mydb
+            - POSTGRES_DB=tms
             - PGDATA=/var/lib/postgresql/data/pgdata
 
 volumes:
-    mypostgres: {}
+    tms-datacenter: {}

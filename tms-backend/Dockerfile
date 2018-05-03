@@ -1,4 +1,4 @@
 FROM openjdk:8-jre-alpine
-ADD /target/tms-backend-0.0.1-SNAPSHOT.jar  tms-backend-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","tms-backend-0.0.1-SNAPSHOT.jar"]
+ADD /target/*.jar  app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
 MAINTAINER Murat Demir
