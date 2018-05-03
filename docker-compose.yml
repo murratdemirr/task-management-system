@@ -2,17 +2,29 @@ version: '3.0'
 services:
     tms-backend:
         container_name: tms-backend
-        image: lala
+        image: backend
         build:
             context: ./tms-backend
             dockerfile: Dockerfile
         ports:
-            - 8080:8080
+            - 8082:80
         depends_on:
             - mypostgres
         links:
             - mypostgres
         command: start
+    tms-view:
+        container_name: tms-view
+        image: view
+        build:
+          context: ./tms-veiew
+          dockerfile: DockerFile
+        ports:
+          - 8080:80
+        depends_on:
+          - tms-backend
+        links:
+          - tms-backend
     mypostgres:
         image: postgres
         ports:
