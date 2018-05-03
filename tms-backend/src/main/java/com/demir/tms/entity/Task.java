@@ -1,8 +1,10 @@
 package com.demir.tms.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * User: muratdemir
@@ -17,23 +19,24 @@ public class Task implements Serializable {
     private static final String PREFIX = "Task.";
 
     @Id
-    @Column(name = "ID", length = 42)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
     @Version
     private Long version;
 
     @Column(name = "CREATED_DATE")
-    private LocalDate creaatedDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "UPDATED_DATE")
-    private LocalDate uptadedDate;
+    private LocalDateTime updatedDate;
 
     @Column(name = "DUE_DATE")
-    private LocalDate dueDate;
+    private LocalDateTime dueDate;
 
     @Column(name = "RESOLVED_DATE")
-    private LocalDate resoolvedDate;
+    private LocalDateTime resolvedDate;
 
     @Column(name = "TITLE")
     private String title;
@@ -47,6 +50,16 @@ public class Task implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
+
+    @PrePersist
+    void onCreate(){
+        this.createdDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    void onUpdate(){
+        this.updatedDate = LocalDateTime.now();
+    }
 
     public String getId() {
         return id;
@@ -64,36 +77,36 @@ public class Task implements Serializable {
         this.version = version;
     }
 
-    public LocalDate getCreaatedDate() {
-        return creaatedDate;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreaatedDate(LocalDate creaatedDate) {
-        this.creaatedDate = creaatedDate;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public LocalDate getUptadedDate() {
-        return uptadedDate;
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUptadedDate(LocalDate uptadedDate) {
-        this.uptadedDate = uptadedDate;
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDate getResoolvedDate() {
-        return resoolvedDate;
+    public LocalDateTime getResolvedDate() {
+        return resolvedDate;
     }
 
-    public void setResoolvedDate(LocalDate resoolvedDate) {
-        this.resoolvedDate = resoolvedDate;
+    public void setResolvedDate(LocalDateTime resolvedDate) {
+        this.resolvedDate = resolvedDate;
     }
 
     public String getTitle() {

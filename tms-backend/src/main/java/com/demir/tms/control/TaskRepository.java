@@ -1,17 +1,16 @@
 package com.demir.tms.control;
 
 import com.demir.tms.entity.Task;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * User: muratdemir
  * Date: 1.05.2018
  * Time: 18:44
  */
-public interface TaskRepository  extends PagingAndSortingRepository<Task, String> {
+@Repository
+public interface TaskRepository extends JpaRepository<Task, String>, TaskRepositoryCustom {
 
-    Page findAll(Pageable pageable);
 
 }
