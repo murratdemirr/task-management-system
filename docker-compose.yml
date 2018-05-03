@@ -12,6 +12,7 @@ services:
             - tms-datacenter
         links:
             - tms-datacenter
+            - tms-view
     tms-view:
         container_name: view-app
         image: view-image
