@@ -8,6 +8,6 @@ package com.demir.tms.entity;
 public enum Status {
 
     WAITING,
-    RESOLVED
+    DONE
 
 }

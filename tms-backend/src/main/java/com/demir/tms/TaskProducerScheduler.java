@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
@@ -33,6 +34,7 @@ public class TaskProducerScheduler {
         task.setTitle("Issue-" + randomId());
         task.setDescription("As Demir, I want " + UUID.randomUUID().toString() + " so that ...");
         task.setStatus(Status.WAITING);
+        task.setDueDate(LocalDateTime.now().plusDays(randomNextDay()));
         repository.save(task);
         LOG.debug("Random a task created");
     }
@@ -40,6 +42,10 @@ public class TaskProducerScheduler {
 
     private Integer randomId(){
        return  new Random().nextInt(9999);
+    }
+
+    private Integer randomNextDay(){
+       return new Random().nextInt(10);
     }
 
 }

@@ -3,8 +3,11 @@ package com.demir.tms.boundary;
 import com.demir.tms.AbstractRestHandler;
 import com.demir.tms.DataFormatException;
 import com.demir.tms.ResourceNotFoundException;
+import com.demir.tms.control.TaskMapper;
 import com.demir.tms.control.TaskRepository;
 import com.demir.tms.entity.Task;
+import com.demir.tms.entity.TaskDto;
+import com.demir.tms.entity.TaskResult;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
@@ -33,18 +36,21 @@ public class TaskResource extends AbstractRestHandler {
 
     @Inject
     TaskRepository repository;
+    @Inject
+    TaskMapper mapper;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get a paginated list of all tasks.", notes = "The list is paginated. You can provide a page number (default 0) and a page size (default 10)")
     public @ResponseBody
-    ResponseEntity<Page<Task>> getAllTask(
+    ResponseEntity<TaskResult> getAllTask(
             @ApiParam(value = "The page number (zero-based)", required = true)
             @RequestParam(value = "page", required = true, defaultValue = "1") Integer page,
             @ApiParam(value = "Tha page size", required = true)
             @RequestParam(value = "size", required = true, defaultValue = "30") Integer size) {
-        Page<Task> all = this.repository.findAll(new PageRequest(page -1 , size, Sort.by(Sort.Order.desc("dueDate"), Sort.Order.desc("priority"))));
-        return new ResponseEntity<>(all, HttpStatus.OK);
+        Page<Task> paginatedResult = this.repository.findAll(new PageRequest(page -1 , size, Sort.by(Sort.Order.desc("dueDate"), Sort.Order.desc("priority"))));
+        TaskResult taskResult = new TaskResult(paginatedResult.getTotalElements(), paginatedResult.map(t -> mapper.dto(t)).getContent());
+        return new ResponseEntity<>(taskResult, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
