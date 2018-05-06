@@ -12,12 +12,11 @@ services:
             - tms-datacenter
         links:
             - tms-datacenter
-            - tms-view
     tms-view:
         container_name: view-app
         image: view-image
         build:
-            context: ./tms-veiew
+            context: ./tms-view
             dockerfile: DockerFile
         ports:
             - 8080:80
