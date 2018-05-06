@@ -24,6 +24,10 @@ public class TaskProducerScheduler {
 
     private static final Logger LOG = LoggerFactory.getLogger(TaskProducerScheduler.class);
 
+    private static final Integer ID_RANGE = 9999;
+    private static final Integer NEX_DAY_RANGE = 10;
+    private static final Integer PRIORITY_RANGE = 99;
+
 
     @Inject
     TaskRepository repository;
@@ -31,21 +35,19 @@ public class TaskProducerScheduler {
     @Scheduled(fixedRate = 5000)
     public void reportCurrentTime() {
         Task task = new Task();
-        task.setTitle("Issue-" + randomId());
+        task.setTitle("Issue-" + random(ID_RANGE));
         task.setDescription("As Demir, I want " + UUID.randomUUID().toString() + " so that ...");
         task.setStatus(Status.WAITING);
-        task.setDueDate(LocalDateTime.now().plusDays(randomNextDay()));
+        task.setDueDate(LocalDateTime.now().plusDays(random(NEX_DAY_RANGE)));
+        task.setPriority(random(PRIORITY_RANGE));
         repository.save(task);
         LOG.debug("Random a task created");
     }
 
 
-    private Integer randomId(){
-       return  new Random().nextInt(9999);
+    private Integer random(Integer range){
+       return  new Random().nextInt(range);
     }
 
-    private Integer randomNextDay(){
-       return new Random().nextInt(10);
-    }
 
 }

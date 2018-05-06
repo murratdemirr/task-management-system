@@ -4,6 +4,8 @@ import com.demir.tms.entity.Task;
 import com.demir.tms.entity.TaskDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -15,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class TaskMapper {
 
-    private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
 
 
     public TaskDto dto(Task task) {
@@ -27,9 +29,17 @@ public class TaskMapper {
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
         dto.setStatus(task.getStatus().name());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-        dto.setDueDate(formatter.format(task.getDueDate()));
+        dto.setPriority(task.getPriority());
+        if (task.getDueDate() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+            dto.setDueDate(formatter.format(task.getDueDate()));
+        }
         return dto;
+    }
+
+    public LocalDateTime localDateTime(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+        return LocalDate.parse(date, formatter).atStartOfDay();
     }
 
 }
