@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,10 +40,10 @@ public class TaskResource extends AbstractRestHandler {
     public @ResponseBody
     ResponseEntity<Page<Task>> getAllTask(
             @ApiParam(value = "The page number (zero-based)", required = true)
-            @RequestParam(value = "page", required = true, defaultValue = "0") Integer page,
+            @RequestParam(value = "page", required = true, defaultValue = "1") Integer page,
             @ApiParam(value = "Tha page size", required = true)
-            @RequestParam(value = "size", required = true, defaultValue = "10") Integer size) {
-        Page<Task> all = this.repository.findAll(new PageRequest(page, size));
+            @RequestParam(value = "size", required = true, defaultValue = "30") Integer size) {
+        Page<Task> all = this.repository.findAll(new PageRequest(page -1 , size, Sort.by(Sort.Order.desc("dueDate"), Sort.Order.desc("priority"))));
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
