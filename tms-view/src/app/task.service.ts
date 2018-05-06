@@ -6,7 +6,7 @@ import {TaskApi} from "./page";
 @Injectable()
 export class TaskService {
 
-  public API = '//localhost:8080/api/v1/';
+  public API = '//tms-backend:8082/api/v1/';
   public TASK_API = this.API + 'tasks';
 
   constructor(private http: HttpClient) {}

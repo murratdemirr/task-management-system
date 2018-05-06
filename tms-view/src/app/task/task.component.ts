@@ -18,7 +18,7 @@ export class TaskComponent implements OnInit {
 
   resultsLength = 0;
   isLoadingResults = true;
-  isRateLimitReached = false;
+  isError = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -43,15 +43,14 @@ export class TaskComponent implements OnInit {
         map(data => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
-          this.isRateLimitReached = false;
+          this.isError = false;
           this.resultsLength = data.totalElements;
 
           return data.content;
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
+          this.isError = true;
           return observableOf([]);
         })
       ).subscribe(data => this.dataSource.data = data);
