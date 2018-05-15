@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -48,7 +49,7 @@ public class TaskResource extends AbstractRestHandler {
             @RequestParam(value = "page", required = true, defaultValue = "1") Integer page,
             @ApiParam(value = "Tha page size", required = true)
             @RequestParam(value = "size", required = true, defaultValue = "30") Integer size) {
-        Page<Task> paginatedResult = this.repository.findAll(new PageRequest(page -1 , size, Sort.by(Sort.Order.asc("dueDate"), Sort.Order.desc("priority"))));
+        Page<Task> paginatedResult = this.repository.findAll(new PageRequest(page -1 , size, Sort.by(Sort.Order.asc("dueDate"), Sort.Order.asc("priority"))));
         TaskResult taskResult = new TaskResult(paginatedResult.getTotalElements(), paginatedResult.map(t -> mapper.dto(t)).getContent());
         return new ResponseEntity<>(taskResult, HttpStatus.OK);
     }
@@ -110,6 +111,12 @@ public class TaskResource extends AbstractRestHandler {
     }
 
 
+    @RequestMapping(value = "ping", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<LocalDateTime> ping() {
+        return new ResponseEntity<>(LocalDateTime.now(), HttpStatus.OK);
+    }
 
 
 }

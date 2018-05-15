@@ -1,8 +1,9 @@
 version: '3.0'
 services:
     tms-backend:
-        container_name: backend-app
-        image: backend-image
+        container_name: tms-backend
+        image: tms-backend
+        hostname: tms-backend
         build:
             context: ./tms-backend
             dockerfile: Dockerfile
@@ -12,10 +13,12 @@ services:
             - tms-datacenter
         links:
             - tms-datacenter
+        networks:
+            - app-network
         command: start
     tms-view:
-        container_name: view-app
-        image: view-image
+        container_name: tms-view
+        image: tms-view
         build:
             context: ./tms-view
             dockerfile: DockerFile
@@ -25,6 +28,8 @@ services:
             - tms-backend
         links:
             - tms-backend
+        networks:
+            - app-network
     tms-datacenter:
         container_name: tms-datacenter
         image: postgres
@@ -37,6 +42,12 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_DB=tms
             - PGDATA=/var/lib/postgresql/data/pgdata
+        networks:
+            - app-network
 
 volumes:
     tms-datacenter: {}
+
+networks:
+  app-network:
+    driver: bridge

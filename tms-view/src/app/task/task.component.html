@@ -3,7 +3,7 @@
        *ngIf="isLoadingResults || isError">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
     <div class="example-rate-limit-reached" *ngIf="isError">
-      An error occurred
+      * An error occurred |  Url {{apiUrl}}
     </div>
   </div>
 

@@ -16,6 +16,7 @@ public class TaskResult implements Serializable {
     public TaskResult(Long totalElements, List<TaskDto> content) {
         this.totalElements = totalElements;
         this.content = content;
+
     }
 
     public Long getTotalElements() {

@@ -19,6 +19,7 @@ export class TaskComponent implements OnInit {
   resultsLength = 0;
   isLoadingResults = true;
   isError = false;
+  apiUrl ="empty";
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,6 +29,7 @@ export class TaskComponent implements OnInit {
 
   ngOnInit() {
     this.exampleDatabase = new TaskService(this.http);
+    this.apiUrl=this.exampleDatabase.TASK_API;
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);

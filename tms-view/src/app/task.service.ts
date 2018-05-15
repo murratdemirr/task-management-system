@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/internal/Observable";
 import {TaskApi} from "./page";
+import {environment} from "../environments/environment";
+
+const baseApiUrl = environment.baseApiUrl;
+
 
 @Injectable()
 export class TaskService {
-
-  public API = '//tms-backend:8082/api/v1/';
-  public TASK_API = this.API + 'tasks';
+  public TASK_API = baseApiUrl + 'tasks';
 
   constructor(private http: HttpClient) {}
 
